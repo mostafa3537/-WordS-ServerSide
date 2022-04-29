@@ -2,7 +2,6 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-// const Product = require('./productModel');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -22,7 +21,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'guide', 'lead-guide', 'admin'],
+    enum: ['user', 'admin'],
     default: 'user',
   },
   password: {
@@ -31,8 +30,6 @@ const userSchema = new mongoose.Schema({
     // minlength: 8,
     select: false,
   },
-  //cart
-  cart: Array,
   passwordConfirm: {
     type: String,
     required: [true, 'Please confirm your password'],
@@ -74,14 +71,6 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-//add to cart
-userSchema.pre(/^find/, async function (next) {
-  console.log('this.cart', this.cart);
-  // const cartPromises = this.cart.map(async (id) => await Product.findById(id));
-  // this.cart = await Promise.all(cartPromises);
-  next();
-});
-
 userSchema.pre(/^find/, function (next) {
   // this points to the current query
   this.find({ active: { $ne: false } });
@@ -104,7 +93,6 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 
     return JWTTimestamp < changedTimestamp;
   }
-
   // False means NOT changed
   return false;
 };

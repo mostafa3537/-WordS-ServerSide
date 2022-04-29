@@ -34,14 +34,19 @@ exports.uploadUserPhoto = upload.single('photo');
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
 
-  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+  const folderName = `img/users/user-${req.user.id}-${Date.now()}.jpeg`;
+
+  if (process.env.NODE_ENV === 'development') {
+    req.file.filename = `${req.protocol}://localhost:8000/${folderName}`;
+  } else if (process.env.NODE_ENV === 'production') {
+    req.file.filename = `https://iti-art-deco.herokuapp.com/${folderName}`;
+  }
 
   await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(`public/img/users/${req.file.filename}`);
-
+    .toFile(`puplic/${folderName}`);
   next();
 });
 
@@ -70,7 +75,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'name', 'email', 'cart');
+  const filteredBody = filterObj(req.body, 'name', 'email');
 
   if (req.file) filteredBody.photo = req.file.filename;
 

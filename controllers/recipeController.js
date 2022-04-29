@@ -82,31 +82,3 @@ exports.getRecipe = factory.getOne(Recipe);
 exports.createRecipe = factory.createOne(Recipe);
 exports.updateRecipe = factory.updateOne(Recipe);
 exports.deleteRecipe = factory.deleteOne(Recipe);
-
-exports.getRecipeStats = catchAsync(async (req, res, next) => {
-  const stats = await Recipe.aggregate([
-    {
-      $match: { ratingsAverage: { $gte: 4.5 } },
-    },
-    {
-      $group: {
-        _id: { $toUpper: '$difficulty' },
-        numRatings: { $sum: '$ratingsQuantity' },
-        avgRating: { $avg: '$ratingsAverage' },
-        avgPrice: { $avg: '$price' },
-        minPrice: { $min: '$price' },
-        maxPrice: { $max: '$price' },
-      },
-    },
-    {
-      $sort: { avgPrice: 1 },
-    },
-  ]);
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      stats,
-    },
-  });
-});
