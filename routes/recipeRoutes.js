@@ -8,7 +8,12 @@ const router = express.Router();
 router
   .route('/')
   .get(recipeController.getAllRecipes)
-  .post(authController.protect, recipeController.createRecipe);
+  .post(
+    authController.protect,
+    recipeController.createRecipe,
+    recipeController.uploadRecipeImage,
+    recipeController.resizeRecipeImage
+  );
 
 //update recipes & delete recipes
 router
@@ -16,8 +21,8 @@ router
   .get(recipeController.getRecipe)
   .patch(
     authController.protect,
-    recipeController.uploadRecipeImages,
-    recipeController.resizeRecipeImages,
+    recipeController.uploadRecipeImage,
+    recipeController.resizeRecipeImage,
     recipeController.updateRecipe
   )
   .delete(authController.protect, recipeController.deleteRecipe);

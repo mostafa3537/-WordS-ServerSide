@@ -5,15 +5,6 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
-// const multerStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'public/img/users');
-//   },
-//   filename: (req, file, cb) => {
-//     const ext = file.mimetype.split('/')[1];
-//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
-//   }
-// });
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
@@ -24,6 +15,7 @@ const multerFilter = (req, file, cb) => {
   }
 };
 
+//dest dir to upload into
 const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter,
@@ -41,12 +33,11 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   } else if (process.env.NODE_ENV === 'production') {
     req.file.filename = `https://iti-art-deco.herokuapp.com/${folderName}`;
   }
-
   await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(`puplic/${folderName}`);
+    .toFile(`public/${folderName}`);
   next();
 });
 
@@ -111,7 +102,5 @@ exports.createUser = (req, res) => {
 
 exports.getUser = factory.getOne(User);
 exports.getAllUsers = factory.getAll(User);
-
-// Do NOT update passwords with this!
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);

@@ -18,11 +18,11 @@ const userRouter = require('./routes/userRoutes');
 // Start express app
 const app = express();
 
-// app.configure(function(){
+// app.configure(function () {
 //   app.use(express.bodyParser());
 // });
 
-// app.enable('trust proxy');
+app.enable('trust proxy');
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
 

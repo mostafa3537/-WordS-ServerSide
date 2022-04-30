@@ -1,22 +1,25 @@
 const mongoose = require('mongoose');
-// const validator = require('validator');
 
 const recipeSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, 'A recipe must have a name'],
+      // required: [true, 'A recipe must have a name'],
       // unique: true,
     },
-    ingredient: [
-      {
-        type: String,
-        required: [true, 'A recipe must have a ingredient'],
-      },
-    ],
+    ingredient: {
+      type: String,
+      // required: [true, 'A recipe must have a ingredient'],
+    },
+    category: {
+      type: String,
+      enum: ['Egyption Recipes', 'Italian Recipes', 'Asian Recipes'],
+      default: 'Egyption Recipes',
+    },
+
     imageCover: {
       type: String,
-      required: [true, 'A recipe must have a cover image'],
+      // required: [true, 'A recipe must have a cover image'],
     },
   },
   {
