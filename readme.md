@@ -9,7 +9,7 @@ Expressjs, Nodejs
 
 ## clone or download
 ```terminal
-$ git clone https://github.com/mostafa3537/-WordS-ServerSide.git
+$ git clone https://github.com/mostafa3537/WordS-ServerSide.git
 ```
 
 ## project structure
