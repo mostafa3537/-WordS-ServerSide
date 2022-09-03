@@ -1,2 +1,3 @@
-# Full Stack Engineer Task - AIM Technologies
-simple website where you can view, save, update, delete your recipes.
+# JavaScript Project- 
+simple website where you can practice categorizing a set of words according to their part of speech.
+ 

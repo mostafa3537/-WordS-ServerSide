@@ -1,7 +1,7 @@
 {
-  "name": "woodtale",
+  "name": "Words",
   "version": "1.0.0",
-  "description": "ecommerce for saling wood products",
+  "description": "simple website where you can practice categorizing a set of words according to their part of speech",
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -10,7 +10,7 @@
     "start:prod": "set NODE_ENV=production&&nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "mostafa",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -31,7 +31,6 @@
     "multer": "^1.4.4",
     "nodemailer": "^6.7.2",
     "pug": "^3.0.2",
-    "sharp": "^0.30.2",
     "slugify": "^1.6.5",
     "stripe": "^8.207.0",
     "validator": "^13.7.0",
